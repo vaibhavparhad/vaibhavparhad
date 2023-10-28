@@ -1,0 +1,66 @@
+finding highest element most efficiently in mysql
+
+>>>>>lets find the highest salary by department
+theen we can find others easily
+ 
+ but first you will have to find the highest and 2nd highest salaries
+ 
+we can get max (highest) or min(lowest) record in the database table very easily by using the
+
+max() function or min() function 
+
+
+
+this means finding the third highest value , not overall bt within each subset , where a subset has the salaries , where a subset has salary for a given department the most helpful tool for doing this is the window function
+
+we are going to learn how we can select the nth highest record in a database table with the help of various technique
+
+
+create database nested_query 
+use nested_query 
+create table Nested_Query(
+e_id int not null,
+f_name varchar(40),
+l_name varchar(40),
+dept varchar (40) not null,
+city varchar (40),
+salary float not null);
+
+insert into Nested_Query values
+(001,'nichole','smith','data sciance','denver',65000),
+(002,'smith','carter','data sciance','toronto',75000),
+(003,'anna','frazer','deep learning','dallas',79000),
+(004,'kamila','kender', 'arts', 'nashville', 69000),
+(005, 'dave', 'simpson', 'machine learning', 'oregon', 95000),
+(006, 'kelsey', 'davis', 'software testing', 'denver', 95000),
+(007, 'ashley', 'govtte', 'management', 'colorado', 115000),
+(008, 'frank', 'ross', 'management', 'denver', 110000),
+(009, 'arnold', 'smith', 'data science', 'london', 105000);
+
+<<< lets check the table using select *>>>>
+select * from Nested_Query;
+
+<<<<<<< comand>>>>
+<< provide - highest salary output>>
+select salary from Nested_Query
+where salary = (select max(salary) from Nested_Query);
+               <<or>>
+select max(salary) from Nested_Query
+where salary <> (salary<>(select max(salary) from Nested_Query));
+
+      >>>>>>display all salary except highest
+select salary from Nested_Query
+where
+salary <> (select max(salary) from Nested_Query);
+             
+             ##2nd highest salary##
+select distinct salary from Nested_Query
+order by salary desc limit 1 offset 1;
+
+     >>>>>>>>3rd highest salary>>>>>>
+select distinct salary from Nested_Query
+order by salary desc limit 1 offset 2;
+
+   <<<<< 4th highest salary>>>>
+select distinct salary from Nested_Query
+order by salary desc limit 1 offset 3 ;
